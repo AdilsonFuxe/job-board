@@ -20,6 +20,7 @@ export async function login(email, password) {
     body: JSON.stringify({ email, password }),
   });
   if (!response.ok) {
+
     return null;
   }
   const { token } = await response.json();

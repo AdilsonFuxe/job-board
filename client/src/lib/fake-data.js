@@ -28,4 +28,11 @@ export const jobs = [
     company: companies[1],
     description: LOREM_IPSUM,
   },
+  {
+    id: 'job3',
+    title: 'Job 2',
+    date: '2023-01-22',
+    company: companies[1],
+    description: LOREM_IPSUM,
+  },
 ];
