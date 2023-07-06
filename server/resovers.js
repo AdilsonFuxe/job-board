@@ -1,4 +1,4 @@
-import {getJob, getJobs, getJobsByCompany} from "./db/jobs.js";
+import {createJob, getJob, getJobs, getJobsByCompany} from "./db/jobs.js";
 import {getCompany} from "./db/companies.js";
 import {GraphQLError} from "graphql";
 
@@ -16,6 +16,15 @@ export const resolvers = {
       return company;
     }
   },
+
+  Mutation: {
+    createJob: async (__root, {input: {title, description}}) => {
+      const  companyId = "FjcJCHJALA4i";
+      const result = await createJob({companyId, title, description});
+      return result;
+    }
+  },
+
   Company: {
     jobs: (company) =>  getJobsByCompany(company.id)
   },

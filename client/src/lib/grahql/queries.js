@@ -2,6 +2,19 @@ import {GraphQLClient, gql} from 'graphql-request'
 
 const client = new GraphQLClient('http://localhost:9000/graphql');
 
+export const createJob = async ({title,description}) => {
+  const query = gql`
+      mutation CreateJob($input: CreateJobInput!)  {
+          job: createJob(input: $input) {
+              id
+          }
+      }
+  `
+
+  const {job} =  await  client.request(query, { input: {title, description} });
+  return job;
+}
+
 export const getJobs = async () => {
   const query = gql`
     query Query {

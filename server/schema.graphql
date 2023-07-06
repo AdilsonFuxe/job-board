@@ -4,6 +4,10 @@ type Query {
     company(id: ID!): Company
 }
 
+type Mutation {
+    createJob(input: CreateJobInput!): Job
+}
+
 type Company {
     id: ID!
     name: String!
@@ -18,4 +22,8 @@ type Job {
     """The __date__ when the JOB was published, in ISO-8601 format. E.g. `2022-12-31`"""
     date: String!
     company: Company!
+}
+
+input CreateJobInput {
+    title: String!, description: String
 }
