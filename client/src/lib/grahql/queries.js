@@ -31,7 +31,7 @@ export  const getJob = async (id) => {
               company {
                   id,
                   name
-              }
+              },
           }
       }
   `
@@ -45,7 +45,13 @@ export  const getCompany = async (id) => {
           company(id: $id) {
               id,
               name,
-              description
+              description,
+              jobs {
+                  id,
+                  title,
+                  description,
+                  date
+              }
           }
       }
   `
