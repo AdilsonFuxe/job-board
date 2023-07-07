@@ -18,9 +18,13 @@ export const resolvers = {
   },
 
   Mutation: {
-    createJob: async (__root, {input: {title, description}}) => {
-      const companyId = "FjcJCHJALA4i";
-      const result = await createJob({companyId, title, description});
+    createJob: async (__root, {input: {title, description}}, { user }) => {
+      if(!user) {
+        throw new GraphQLError(`Unauthorized`, {
+          extensions: {code: 'Unauthorized'}
+        })
+      }
+      const result = await createJob({companyId: user.companyId, title, description});
       return result;
     },
 

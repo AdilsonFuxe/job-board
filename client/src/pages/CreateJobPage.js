@@ -11,7 +11,7 @@ function CreateJobPage() {
     event.preventDefault();
     console.log('should post a new job:', { title, description });
     const {id} = await createJob({title, description})
-    navigate('/jobs/WIaxeK8R7TTt');
+    navigate(`/jobs/${id}`);
   };
 
   return (
