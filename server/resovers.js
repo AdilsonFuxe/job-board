@@ -1,16 +1,16 @@
-import {createJob, getJob, getJobs, getJobsByCompany} from "./db/jobs.js";
+import {createJob, deleteJob, getJob, getJobs, getJobsByCompany} from "./db/jobs.js";
 import {getCompany} from "./db/companies.js";
 import {GraphQLError} from "graphql";
 
 export const resolvers = {
   Query: {
     job: (_root, args) => getJob(args.id),
-    jobs:  () =>  getJobs(),
+    jobs: () => getJobs(),
     company: async (__root, args) => {
       const company = await getCompany(args.id)
-      if(!company) {
+      if (!company) {
         throw new GraphQLError(`No company found with id: ${args.id}`, {
-          extensions:{ code: 'Not_FOUND'}
+          extensions: {code: 'Not_FOUND'}
         })
       }
       return company;
@@ -19,14 +19,19 @@ export const resolvers = {
 
   Mutation: {
     createJob: async (__root, {input: {title, description}}) => {
-      const  companyId = "FjcJCHJALA4i";
+      const companyId = "FjcJCHJALA4i";
       const result = await createJob({companyId, title, description});
       return result;
+    },
+
+    deleteJob: async (__root, {id}) => {
+      const job = await deleteJob(id);
+      return job;
     }
   },
 
   Company: {
-    jobs: (company) =>  getJobsByCompany(company.id)
+    jobs: (company) => getJobsByCompany(company.id)
   },
   Job: {
     date: ({createdAt}) => toIsoDate(createdAt),
