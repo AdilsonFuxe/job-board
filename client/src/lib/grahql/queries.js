@@ -40,17 +40,25 @@ export const createJob = async ({title, description}) => {
   return data.job;
 }
 
+const JobDetailFragment = gql`
+    fragment JobDetails on Job {
+        id,
+        title,
+        description,
+        date,
+        company {
+            id,
+            name
+        }
+    }
+`
+
 export const getJobs = async () => {
   const query = gql`
-      query Query {
+      ${JobDetailFragment}
+      query GetJobs {
           jobs {
-              id,
-              title,
-              date,
-              company {
-                  id,
-                  name
-              }
+              ...JobDetails
           }
       }
   `
@@ -60,16 +68,10 @@ export const getJobs = async () => {
 
 export const getJob = async (id) => {
   const query = gql`
+      ${JobDetailFragment}
       query Job($id: ID!) {
           job(id: $id) {
-              id,
-              title,
-              description,
-              date,
-              company {
-                  id,
-                  name
-              },
+              ...JobDetails
           }
       }
   `
